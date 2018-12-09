@@ -28,9 +28,8 @@
         } catch(e) { // ie8 hack
             storage = engine;
         }
-
         // if the database doesn't exist, create it
-        db = storage[ db_id ];
+        db = storage.getItem(db_id);
         if( !( db && (db = JSON.parse(db)) && db.tables && db.data ) ) {
             if(!validateName(db_name)) {
                 error("The name '" + db_name + "' contains invalid characters");
@@ -48,14 +47,14 @@
         // drop the database
         function drop() {
 			if(storage.hasOwnProperty(db_id)) {
-                delete storage[db_id];
+               storage.removeItem(db_id);
             }
             db = null;
         }
 
         function getItem(key) {
             try {
-                return storage.storage[key];
+                return storage.getItem(key);
             } catch (e) {
                 return null;
             }
